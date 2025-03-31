@@ -1,0 +1,71 @@
+/* Enhanced Settings Page Styles */
+.settings-page {
+    padding: 30px;
+    background-color: #f4f5fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .settings-header {
+    color: #4a148c;
+    text-align: start;
+    margin-bottom: 20px;
+  }
+  
+  .settings-form {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .settings-section {
+    margin-bottom: 25px;
+  }
+  
+  .settings-section h3 {
+    color: #7b1fa2;
+    border-bottom: 2px solid #ce93d8;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .form-group input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .save-button {
+    background-color: #4a148c;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .save-button:hover {
+    background-color: #3c0d78;
+  }
+  

@@ -1,0 +1,76 @@
+.footer {
+    background-color: #ede7f6; /* Light Purple */
+    color: #4a148c; /* Dark purple text */
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footer-sections {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px; /* Optional: to prevent content from stretching too wide */
+    margin-bottom: 20px;
+  }
+  
+  .footer-section {
+    display: flex;
+    flex-direction: column;
+    width: 30%; /* Adjust width of each section as needed */
+    text-align: left;
+  }
+  
+  .footer-logo {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .footer-logo .company-name {
+    font-size: 2em;
+    margin: 5px 0;
+  }
+  
+  .footer-logo .tagline {
+    font-style: italic;
+    color: #6a1b9a;
+    margin: 5px 0;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .social-icon {
+    font-size: 1.8em;
+    color: #4a148c;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    color: #7b1fa2; /* Darker purple on hover */
+  }
+  
+  .contact-us h4,
+  .about-us h4 {
+    margin-bottom: 10px;
+  }
+  
+  .contact-us p,
+  .about-us p {
+    margin: 5px 0;
+  }
+  
+  .footer .copyright {
+    text-align: center;
+    font-size: 1em;
+    margin-top: 20px;
+    width: 100%;
+  }
+  
