@@ -6,7 +6,9 @@ export const API_ENDPOINTS = {
 
     LANDTODASHBOARD: `${API_BASE_URL}/admin_dashboard`,
 
-   GETTRANSACTIONS: `${API_BASE_URL}/transactions`
+   GETTRANSACTIONS: `${API_BASE_URL}/transactions`,
+
+   GETSALESDATA: `${API_BASE_URL}/get_sales_data`,
 
     
 }

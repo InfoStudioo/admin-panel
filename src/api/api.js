@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { jwtDecode} from 'jwt-decode';
 import { API_ENDPOINTS } from '../config';
-
+import { handleSessionExpired , checkTokenandUSer, checkTokenExpiry, getAuthHeaders, getTokenAndUser} from '../utils/util';
 
 export const loginUser = async(identifier, password ) => {
   localStorage.removeItem("token");
@@ -32,24 +31,15 @@ export const handleLoginToDashboard = async (navigate, setError, setLoading) => 
   setLoading(true);
   setError(null);
 
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
+  checkTokenandUSer();
 
-
-  if (!token || !user) {
-    setError("Session expired. Please log in again.");
-    navigate("/loginpage");
-    return;
-  }
-
+  const { user } = getTokenAndUser();
 
   try {
     
 
     // Send token in the Authorization header
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    const headers = getAuthHeaders();
 
     const response = await axios.post(
       API_ENDPOINTS.LANDTODASHBOARD,
@@ -78,34 +68,12 @@ export const handleLoginToDashboard = async (navigate, setError, setLoading) => 
 export const fetchTransactions = async() => {
   try{
 
-     // Retrieve the JWT token 
-     const token = localStorage.getItem('token');
-     const user = JSON.parse(localStorage.getItem("user"));
-  
+    checkTokenandUSer();
 
-     if (!token ) {
-     
-      handleSessionExpired();
+    checkTokenExpiry();
     
-      return[];
-    }
-
-    const decodedToken = jwtDecode(token);
-
-    const currentTime = Date.now() / 1000;
-    
-
-    if (decodedToken.exp < currentTime) {
-      console.error('Session Expired: JWT token has expired');
-      
-      handleSessionExpired();
-      return[];
-    }
-
-    
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    const {user} = getTokenAndUser();
+    const headers = getAuthHeaders();
     const response = await axios.get(`${API_ENDPOINTS.GETTRANSACTIONS}?userId=${user.id}`,
       {
         headers
@@ -131,35 +99,43 @@ export const fetchTransactions = async() => {
 }
 
 
+export const fetchSalesData = async() => {
+
+  try{
+
+    checkTokenandUSer();
+
+    checkTokenExpiry();
 
 
-// Function to handle session expiration (redirect and disable back button)
-const handleSessionExpired = () => {
+    const {user} = getTokenAndUser();
+
+    const headers = getAuthHeaders()
+    ;
+    const response = await axios.get(`${API_ENDPOINTS.GETSALESDATA}?userId=${user.id}`,
+      {
+        headers
+      }
+       );
+ 
+       return response.data;
+    
+  }
+  catch(error){
+
+    console.error('Error fetching transactions:', error.message);
+
+     // If API explicitly returns 401, handle session expiration
+     if (error.response && error.response.status === 401){
+
+     handleSessionExpired();
+
+    }
+
+    return [];
+
+  }
+
+} ;
 
 
-  alert('Session expired. Please log in again.');
-  
-
-
-  // Clear token from localStorage
-  localStorage.removeItem('jwtToken');
-  localStorage.removeItem('user');
-
-  // Redirect to login page
-  window.location.href = '/loginpage';
-
-
-  setTimeout( () => {
-    // Reset the browser history to only contain the login page
-    window.history.replaceState(null, null, '/loginpage' );
-    window.history.pushState(null, null, '/loginpage');
-
-    window.onpopstate = () => {
-      window.history.pushState(null, null, '/loginpage');
-    };
-
-  }, 100);
-
-
-  
-};
