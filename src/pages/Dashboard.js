@@ -4,26 +4,33 @@ import SalesChart from '../components/SalesChart';
 import SpendAnalysisChart from '../components/SpendAnalysisChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign, faChartLine, faCalendarDay, faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { fetchTransactions } from '../api/api';
+import { fetchTransactions, fetchSpendData } from '../api/api';
 
 
 
 const Dashboard = () => {
 
   const [transactions, setTransactions] = useState([]);
+  const [spendData, setSpendData] = useState([]);
+  const[filter, setFilter] = useState('month');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchTransactions();
         setTransactions(data);
+
+         // Fetch spend data based on default filter 'month'
+       const spendDataResponse = await fetchSpendData(filter);
+       setSpendData(spendDataResponse.data);
+
       } catch (error) {
         console.error('Error fetching transactions:', error.message);
       }
     };
   
     fetchData();
-  }, []);
+  }, [filter]);  // Fetch data whenever filter changes
 
   return (
     <div className="dashboard-content">
@@ -60,7 +67,7 @@ const Dashboard = () => {
           <SalesChart />
         </div>
         <div className="spend-analysis-container">
-          <SpendAnalysisChart />
+          <SpendAnalysisChart spendData={spendData} setFilter={setFilter} />
         </div>
       </div>
 

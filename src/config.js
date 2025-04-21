@@ -10,6 +10,8 @@ export const API_ENDPOINTS = {
 
    GETSALESDATA: `${API_BASE_URL}/get_sales_data`,
 
+   GETSPENDDATA: `${API_BASE_URL}/get_spend_data`,
+
     
 }
 

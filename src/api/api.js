@@ -118,6 +118,7 @@ export const fetchSalesData = async() => {
       }
        );
  
+       console.log(response.data);
        return response.data;
     
   }
@@ -139,3 +140,34 @@ export const fetchSalesData = async() => {
 } ;
 
 
+
+export const fetchSpendData = async (filter = 'month') => {
+
+  try {
+
+   checkTokenandUSer();
+   checkTokenExpiry();
+
+   const { user } = getTokenAndUser();
+
+   const headers = getAuthHeaders();
+
+   const response = await axios.get(
+    `${API_ENDPOINTS.GETSPENDDATA}?filter=${filter}&userId=${user.id}`,
+    {headers}
+   
+  );
+
+return response.data;
+  }catch (error) {
+    console.error('Error fetching spend data:', error.message);
+
+    if (error.response && error.response.status === 401 ) {
+      handleSessionExpired();
+    }
+
+    return { data: []};
+     
+  }
+
+};
