@@ -4,7 +4,7 @@ import SalesChart from '../components/SalesChart';
 import SpendAnalysisChart from '../components/SpendAnalysisChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign, faChartLine, faCalendarDay, faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { fetchTransactions, fetchSpendData } from '../api/api';
+import { fetchTransactions, fetchSpendData , fetchSalesSummary} from '../api/api';
 
 
 
@@ -13,6 +13,10 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
   const [spendData, setSpendData] = useState([]);
   const[filter, setFilter] = useState('month');
+
+  const [totalSell, setTotalSell] = useState(0);
+  const [thisMonthSell, setThisMonthSell] = useState(0);
+  const [todaySell, setTodaySell] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +28,10 @@ const Dashboard = () => {
        const spendDataResponse = await fetchSpendData(filter);
        setSpendData(spendDataResponse.data);
 
+       const salesSummary = await fetchSalesSummary();
+       setTotalSell(salesSummary.totalSell);
+        setThisMonthSell(salesSummary.thisMonthSell);
+        setTodaySell(salesSummary.currentWeekSell);
       } catch (error) {
         console.error('Error fetching transactions:', error.message);
       }
@@ -44,15 +52,15 @@ const Dashboard = () => {
       <div className="dashboard-boxes">
         <div className="box total-sell">
           <h3><FontAwesomeIcon icon={faDollarSign} /> Total Sell</h3>
-          <p>578k</p>
+          <p>${parseFloat(totalSell).toLocaleString()}</p>
         </div>
         <div className="box month-sell">
           <h3><FontAwesomeIcon icon={faChartLine} /> This Month Sell</h3>
-          <p>89k</p>
+          <p>${parseFloat(thisMonthSell).toLocaleString()}</p>
         </div>
         <div className="box today-sell">
           <h3><FontAwesomeIcon icon={faCalendarDay} /> Today's Sell</h3>
-          <p>11k</p>
+          <p>${parseFloat(todaySell).toLocaleString()}</p>
         </div>
         <div className="box upgrade-box">
           <h3><FontAwesomeIcon icon={faArrowUp} /> Upgrade to Premium</h3>

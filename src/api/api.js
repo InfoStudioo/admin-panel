@@ -171,3 +171,42 @@ return response.data;
   }
 
 };
+
+
+export const fetchSalesSummary = async () => {
+
+try{
+
+  checkTokenandUSer();
+  checkTokenExpiry();
+
+  const { user } = getTokenAndUser();
+  const headers = getAuthHeaders();
+
+  const response = await axios.get(
+    `${API_ENDPOINTS.GETSALESSUMMARY}?userId=${user.id}`,
+    {
+      headers
+    }
+  );
+
+return response.data;
+
+} catch (error) {
+  console.error('Error fetching sales summary:', error.message);
+
+  if (error.response && error.response.status === 401) {
+   
+     handleSessionExpired();
+
+  }
+
+  return {
+    totalSell: 0,
+    thisMonthSell: 0,
+    currentWeekSell: 0,
+  };
+ 
+  
+}
+};

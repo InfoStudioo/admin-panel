@@ -12,6 +12,6 @@ export const API_ENDPOINTS = {
 
    GETSPENDDATA: `${API_BASE_URL}/get_spend_data`,
 
-    
+   GETSALESSUMMARY: `${API_BASE_URL}/get_sales_summary`,
 }
 
